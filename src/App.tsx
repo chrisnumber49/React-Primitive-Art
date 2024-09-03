@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Stage, Layer, Rect, Circle, RegularPolygon } from 'react-konva';
 import AddingShapePanel from './components/AddingShapePanel'
 
 function App() {
+  const [shapes, setShapes] = useState([]);
+
   const addingNewPattern = (data:object) => {
     console.warn(data)
   }
@@ -15,7 +17,9 @@ function App() {
       </div>
 
       <div className="canvas-container">
-        <Stage width={window.innerWidth*0.7} height={window.innerHeight}>
+        <h2 className="m-2">Your Canvas</h2>
+
+        <Stage className="border-top border-dark" width={window.innerWidth*0.7} height={window.innerHeight}>
           <Layer>
             <RegularPolygon x={100} y={100} radius={40} sides={3} fill="green" rotation={0} draggable/>
 

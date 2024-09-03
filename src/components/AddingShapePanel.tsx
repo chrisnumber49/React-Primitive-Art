@@ -1,5 +1,6 @@
 import React, { useReducer, useState } from 'react'
 import '../App.css';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ShapeStyles {
     triangleStyle: Object;
@@ -94,12 +95,14 @@ function AddingShapePanel({onAddingNewPattern}) {
         let newShape:any = {};
         if(shape === "TRIANGLE") {
             newShape = {
+                id: uuidv4(),
                 shape: 'TRIANGLE',
                 radius: 0.8*currentZoom.triangle,
                 rotation: currentRotation.triangle
             }
         } else if(shape === "RECTANGLE") {
             newShape = {
+                id: uuidv4(),
                 shape: 'RECTANGLE',
                 width: 1.2*currentZoom.rectangle,
                 height: 1.2*currentZoom.rectangle,
@@ -107,6 +110,7 @@ function AddingShapePanel({onAddingNewPattern}) {
             }
         } else if(shape === "CIRCLE") {
             newShape = {
+                id: uuidv4(),
                 shape: 'CIRCLE',
                 radius: 0.6*currentZoom.circle
             }
