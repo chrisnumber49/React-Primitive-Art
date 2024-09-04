@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { Stage, Layer, Rect, Circle, RegularPolygon } from 'react-konva';
 import AddingShapePanel from './components/AddingShapePanel'
@@ -45,6 +45,15 @@ function App() {
     setPatterns(patternsArray);
   };
 
+  const onDeletePattern = () => {
+    const updatedPatterns = patterns.filter((pattern)=>{
+      return pattern.id !== selectedId;
+    });
+
+    setPatterns(updatedPatterns);
+    setSelectedId('');
+  }
+
   return (
     <div className="main-container">
       <div className="panel-container">
@@ -54,6 +63,15 @@ function App() {
       <div className="canvas-container">
         <h2 className="m-2">Your Canvas</h2>
 
+        {selectedId !== '' && 
+          <button
+            onClick={onDeletePattern}
+            className='delete-btn btn btn-danger'
+          >
+            Delete Selected Pattern
+          </button>
+        }
+        
         <Stage className="border-top border-dark" width={window.innerWidth*0.7} height={window.innerHeight}>
           <Layer>
             {patterns.map((pattern) => {

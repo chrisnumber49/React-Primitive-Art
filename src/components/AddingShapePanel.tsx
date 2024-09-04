@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react'
+import { useReducer, useState } from 'react'
 import '../App.css';
 import { v4 as uuidv4 } from 'uuid';
 import { initialShapeStyles, ShapeStyles, Pattern } from '../const/const';
