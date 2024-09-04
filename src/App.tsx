@@ -14,11 +14,17 @@ function App() {
       return pattern.shape;
     });
 
-    const score = 100;
+    const triangleCount = patternType.filter(type => type === "TRIANGLE").length;
+    const rectangleCount = patternType.filter(type => type === "RECTANGLE").length;
+    const circleCount = patternType.filter(type => type === "CIRCLE").length;
+    const score = patternType.length? 
+      100 - 10*(Math.max(triangleCount, rectangleCount, circleCount) - Math.min(triangleCount, rectangleCount, circleCount)): 
+      0;
+
     const updatedPatternCount = {
-      triangle: patternType.filter(type => type === "TRIANGLE").length, 
-      rectangle: patternType.filter(type => type === "RECTANGLE").length, 
-      circle: patternType.filter(type => type === "CIRCLE").length,
+      triangle: triangleCount, 
+      rectangle: rectangleCount, 
+      circle: circleCount,
       score: score
     };
 
