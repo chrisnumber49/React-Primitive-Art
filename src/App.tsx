@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { Stage, Layer, Rect, Circle, RegularPolygon } from 'react-konva';
 import AddingShapePanel from './components/AddingShapePanel'
@@ -7,6 +7,23 @@ import { Pattern } from './const/const';
 function App() {
   const [patterns, setPatterns] = useState([]);
   const [selectedId, setSelectedId] = useState('');
+  const [patternCount, setPatternCount] = useState({triangle:0, rectangle:0, circle:0, score:100});
+
+  useEffect(() => {
+    const patternType = patterns.map((pattern) => {
+      return pattern.shape;
+    });
+
+    const score = 100;
+    const updatedPatternCount = {
+      triangle: patternType.filter(type => type === "TRIANGLE").length, 
+      rectangle: patternType.filter(type => type === "RECTANGLE").length, 
+      circle: patternType.filter(type => type === "CIRCLE").length,
+      score: score
+    };
+
+    setPatternCount(updatedPatternCount);
+  }, [patterns.length]);
 
   const addingNewPattern = (newPattern: Pattern) => {
     console.log('New Pattern', newPattern);
@@ -61,8 +78,11 @@ function App() {
       </div>
 
       <div className="canvas-container">
-        <h2 className="m-2">Your Canvas</h2>
-
+        <div className="d-flex justify-content-between align-items-center">
+          <h2 className="m-2">Your Canvas Score: {patternCount.score}</h2>
+          <div className='mx-3'>triangle: {patternCount.triangle}, rectangle: {patternCount.rectangle}, circle: {patternCount.circle}</div>
+        </div>
+        
         {selectedId !== '' && 
           <button
             onClick={onDeletePattern}
