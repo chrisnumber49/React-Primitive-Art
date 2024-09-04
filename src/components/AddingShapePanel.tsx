@@ -1,71 +1,39 @@
 import React, { useReducer, useState } from 'react'
 import '../App.css';
 import { v4 as uuidv4 } from 'uuid';
-
-interface ShapeStyles {
-    triangleStyle: Object;
-    rectangleStyle: Object;
-    circleStyle: Object;
-}
-
-const initialShapeStyles: ShapeStyles = {
-    triangleStyle: {
-        'width': 0,
-        'height': 0,
-        'borderWidth': '0 36px 60px 36px',
-        'borderColor': 'transparent transparent green transparent',
-        'borderStyle': 'solid',
-        'rotate': '0deg'
-    },
-    rectangleStyle: {
-        'width': '60px',
-        'height': '60px',
-        'borderStyle': 'solid',
-        'borderColor': 'red',
-        'backgroundColor': 'red',
-        'rotate': '0deg'
-    },
-    circleStyle: {
-        'width': '60px',
-        'height': '60px',
-        'borderStyle': 'solid',
-        'borderColor': 'yellow',
-        'backgroundColor': 'yellow',
-        'borderRadius': '50%'
-    }
-}
+import { initialShapeStyles, ShapeStyles, Pattern } from '../const/const';
 
 const reducer = (state: ShapeStyles, action:{shape:string, changeOn:string, value:number}) => {
-    let newParams:any = {};
+    let newParamsSetting:any = {};
 
     switch (action.shape) {
         case "TRIANGLE":
-            newParams = {...state.triangleStyle};
+            newParamsSetting = {...state.triangleStyle};
             if(action.changeOn === "ZOOM"){
-                newParams.borderWidth = `0 ${0.72*action.value}px ${1.2*action.value}px ${0.72*action.value}px`;
+                newParamsSetting.borderWidth = `0 ${0.72*action.value}px ${1.2*action.value}px ${0.72*action.value}px`;
             } else if(action.changeOn === "ROTATION"){
-                newParams.rotate = `${action.value}deg`;
+                newParamsSetting.rotate = `${action.value}deg`;
             }
 
-            return {...state, triangleStyle: newParams}
+            return {...state, triangleStyle: newParamsSetting}
         case "RECTANGLE":
-            newParams = {...state.rectangleStyle};
+            newParamsSetting = {...state.rectangleStyle};
             if(action.changeOn === "ZOOM"){
-                newParams.width = `${1.2*action.value}px`;
-                newParams.height = `${1.2*action.value}px`;
+                newParamsSetting.width = `${1.2*action.value}px`;
+                newParamsSetting.height = `${1.2*action.value}px`;
             } else if(action.changeOn === "ROTATION"){
-                newParams.rotate = `${action.value}deg`;
+                newParamsSetting.rotate = `${action.value}deg`;
             }
 
-            return {...state, rectangleStyle: newParams}
+            return {...state, rectangleStyle: newParamsSetting}
         case "CIRCLE":
-            newParams = {...state.circleStyle};
+            newParamsSetting = {...state.circleStyle};
             if(action.changeOn === "ZOOM"){
-                newParams.width = `${1.2*action.value}px`;
-                newParams.height = `${1.2*action.value}px`;
+                newParamsSetting.width = `${1.2*action.value}px`;
+                newParamsSetting.height = `${1.2*action.value}px`;
             }
 
-            return {...state, circleStyle: newParams}
+            return {...state, circleStyle: newParamsSetting}
         default:
             return state;
     }
@@ -92,27 +60,36 @@ function AddingShapePanel({onAddingNewPattern}) {
     };
 
     const addNewShapeToCanvas = (shape: "TRIANGLE"| "RECTANGLE"| "CIRCLE") => {
-        let newShape:any = {};
+        let newShape:Pattern;
         if(shape === "TRIANGLE") {
             newShape = {
                 id: uuidv4(),
                 shape: 'TRIANGLE',
+                x:100,
+                y:100,
                 radius: 0.8*currentZoom.triangle,
-                rotation: currentRotation.triangle
+                rotation: currentRotation.triangle,
+                shadowOffset: 0.1*currentZoom.triangle,
             }
         } else if(shape === "RECTANGLE") {
             newShape = {
                 id: uuidv4(),
                 shape: 'RECTANGLE',
+                x:100,
+                y:100,
                 width: 1.2*currentZoom.rectangle,
                 height: 1.2*currentZoom.rectangle,
-                rotation: currentRotation.rectangle
+                rotation: currentRotation.rectangle,
+                shadowOffset: 0.1*currentZoom.rectangle,
             }
         } else if(shape === "CIRCLE") {
             newShape = {
                 id: uuidv4(),
                 shape: 'CIRCLE',
-                radius: 0.6*currentZoom.circle
+                x:100,
+                y:100,
+                radius: 0.6*currentZoom.circle,
+                shadowOffset: 0.1*currentZoom.circle,
             }
         }
 

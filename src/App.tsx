@@ -2,13 +2,48 @@ import React, { useState } from 'react';
 import './App.css';
 import { Stage, Layer, Rect, Circle, RegularPolygon } from 'react-konva';
 import AddingShapePanel from './components/AddingShapePanel'
+import { Pattern } from './const/const';
 
 function App() {
-  const [shapes, setShapes] = useState([]);
+  const [patterns, setPatterns] = useState([]);
+  const [selectedId, setSelectedId] = useState('');
 
-  const addingNewPattern = (data:object) => {
-    console.warn(data)
+  const addingNewPattern = (newPattern: Pattern) => {
+    console.log('New Pattern', newPattern);
+    setPatterns([...patterns, newPattern]);
   }
+
+  const onSelectPattern = (patternID: string) => {
+    console.log('Select Pattern', patternID);
+    setSelectedId(patternID);
+  }
+
+  const handleDragStart = (e) => {
+    const id = e.target.id();
+    const patternsArray = patterns.slice();
+    const pattern = patternsArray.find((i) => i.id === id);
+    const index = patternsArray.indexOf(pattern);
+    // remove from the list:
+    patternsArray.splice(index, 1);
+    // add to the top
+    patternsArray.push(pattern);
+    setPatterns(patternsArray);
+
+    onSelectPattern(id);
+  };
+  const handleDragEnd = (e) => {
+    const id = e.target.id();
+    const patternsArray = patterns.slice();
+    const pattern = patterns.find((i) => i.id === id);
+    const index = patterns.indexOf(pattern);
+    // update item position
+    patternsArray[index] = {
+      ...pattern,
+      x: e.target.x(),
+      y: e.target.y(),
+    };
+    setPatterns(patternsArray);
+  };
 
   return (
     <div className="main-container">
@@ -21,11 +56,76 @@ function App() {
 
         <Stage className="border-top border-dark" width={window.innerWidth*0.7} height={window.innerHeight}>
           <Layer>
-            <RegularPolygon x={100} y={100} radius={40} sides={3} fill="green" rotation={0} draggable/>
-
-            <Rect x={300} y={300} width={60} height={60} fill="red" rotation={75} draggable/>
-
-            <Circle x={200} y={200} radius={30} fill="yellow" draggable/>
+            {patterns.map((pattern) => {
+              if(pattern.shape ==="TRIANGLE"){
+                return(
+                  <RegularPolygon 
+                    id={pattern.id}
+                    key={pattern.id}
+                    x={pattern.x} 
+                    y={pattern.y} 
+                    radius={pattern.radius} 
+                    sides={3} 
+                    fill="green" 
+                    rotation={pattern.rotation} 
+                    draggable
+                    shadowColor="black"
+                    shadowOpacity={pattern.id === selectedId ? 0.6 : 0}
+                    shadowOffsetX={pattern.shadowOffset}
+                    shadowOffsetY={pattern.shadowOffset}
+                    scaleX={pattern.id === selectedId ? 1.2 : 1}
+                    scaleY={pattern.id === selectedId ? 1.2 : 1}
+                    onClick={()=>{onSelectPattern(pattern.id)}}
+                    onDragStart={handleDragStart}
+                    onDragEnd={handleDragEnd}
+                  />
+                )
+              } else if(pattern.shape ==="RECTANGLE"){
+                return(
+                  <Rect 
+                    id={pattern.id}
+                    key={pattern.id}
+                    x={pattern.x} 
+                    y={pattern.y} 
+                    width={pattern.width} 
+                    height={pattern.height} 
+                    fill="red" 
+                    rotation={pattern.rotation} 
+                    draggable
+                    shadowColor="black"
+                    shadowOpacity={pattern.id === selectedId ? 0.6 : 0}
+                    shadowOffsetX={pattern.shadowOffset}
+                    shadowOffsetY={pattern.shadowOffset}
+                    scaleX={pattern.id === selectedId ? 1.2 : 1}
+                    scaleY={pattern.id === selectedId ? 1.2 : 1}
+                    onClick={()=>{onSelectPattern(pattern.id)}}
+                    onDragStart={handleDragStart}
+                    onDragEnd={handleDragEnd}
+                  />
+                )
+              } else if(pattern.shape ==="CIRCLE"){
+                return(
+                  <Circle 
+                    id={pattern.id}
+                    key={pattern.id}
+                    x={pattern.x} 
+                    y={pattern.y} 
+                    radius={pattern.radius} 
+                    fill="yellow" 
+                    draggable
+                    shadowColor="black"
+                    shadowOpacity={pattern.id === selectedId ? 0.6 : 0}
+                    shadowOffsetX={pattern.shadowOffset}
+                    shadowOffsetY={pattern.shadowOffset}
+                    scaleX={pattern.id === selectedId ? 1.2 : 1}
+                    scaleY={pattern.id === selectedId ? 1.2 : 1}
+                    onClick={()=>{onSelectPattern(pattern.id)}}
+                    onDragStart={handleDragStart}
+                    onDragEnd={handleDragEnd}
+                  />
+                )
+              }
+            })}
           </Layer>
         </Stage>
       </div>
