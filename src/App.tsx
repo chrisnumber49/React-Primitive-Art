@@ -36,7 +36,8 @@ function App() {
     setPatterns([...patterns, newPattern]);
   }
 
-  const onSelectPattern = (patternID: string) => {
+  const onSelectPattern = (event: any, patternID: string) => {
+    event.cancelBubble = true;
     console.log('Select Pattern', patternID);
     setSelectedId(patternID);
   }
@@ -52,7 +53,7 @@ function App() {
     patternsArray.push(pattern);
     setPatterns(patternsArray);
 
-    onSelectPattern(id);
+    onSelectPattern(e, id);
   };
   const handleDragEnd = (e) => {
     const id = e.target.id();
@@ -98,7 +99,12 @@ function App() {
           </button>
         }
         
-        <Stage className="border-top border-dark" width={window.innerWidth*0.7} height={window.innerHeight}>
+        <Stage 
+          className="border-top border-dark" 
+          width={window.innerWidth*0.7} 
+          height={window.innerHeight} 
+          onClick={()=>{setSelectedId('')}}
+        >
           <Layer>
             {patterns.map((pattern) => {
               if(pattern.shape ==="TRIANGLE"){
@@ -117,9 +123,7 @@ function App() {
                     shadowOpacity={pattern.id === selectedId ? 0.6 : 0}
                     shadowOffsetX={pattern.shadowOffset}
                     shadowOffsetY={pattern.shadowOffset}
-                    scaleX={pattern.id === selectedId ? 1.2 : 1}
-                    scaleY={pattern.id === selectedId ? 1.2 : 1}
-                    onClick={()=>{onSelectPattern(pattern.id)}}
+                    onClick={(event)=>{onSelectPattern(event, pattern.id)}}
                     onDragStart={handleDragStart}
                     onDragEnd={handleDragEnd}
                   />
@@ -140,9 +144,7 @@ function App() {
                     shadowOpacity={pattern.id === selectedId ? 0.6 : 0}
                     shadowOffsetX={pattern.shadowOffset}
                     shadowOffsetY={pattern.shadowOffset}
-                    scaleX={pattern.id === selectedId ? 1.2 : 1}
-                    scaleY={pattern.id === selectedId ? 1.2 : 1}
-                    onClick={()=>{onSelectPattern(pattern.id)}}
+                    onClick={(event)=>{onSelectPattern(event, pattern.id)}}
                     onDragStart={handleDragStart}
                     onDragEnd={handleDragEnd}
                   />
@@ -161,9 +163,7 @@ function App() {
                     shadowOpacity={pattern.id === selectedId ? 0.6 : 0}
                     shadowOffsetX={pattern.shadowOffset}
                     shadowOffsetY={pattern.shadowOffset}
-                    scaleX={pattern.id === selectedId ? 1.2 : 1}
-                    scaleY={pattern.id === selectedId ? 1.2 : 1}
-                    onClick={()=>{onSelectPattern(pattern.id)}}
+                    onClick={(event)=>{onSelectPattern(event, pattern.id)}}
                     onDragStart={handleDragStart}
                     onDragEnd={handleDragEnd}
                   />
