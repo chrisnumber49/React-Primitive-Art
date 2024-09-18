@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# ReactPrimitiveArt
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This simple web application allows users to...
+
+<img src="https://github.com/chrisnumber49/angular-adventure-game/blob/main/screen%20shot/Screenshot%202024-09-01%20125407.png" width="700" >
+
+The core technology of this project revolves around using...
 
 ## Available Scripts
 
