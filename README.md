@@ -1,6 +1,7 @@
 # ReactPrimitiveArt
 
-This simple web application allows users to...
+This simple web application allows users to create drawings that contain only three types of primitives: circles, squares, and triangles.
+
 
 <img src="https://github.com/chrisnumber49/React-Primitive-Art/blob/main/screen%20shot/Screenshot%202024-09-19%20004807.png" width="700" >
 <img src="https://github.com/chrisnumber49/React-Primitive-Art/blob/main/screen%20shot/Screenshot%202024-09-19%20004914.png" width="700" >
