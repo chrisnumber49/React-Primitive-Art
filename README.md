@@ -2,12 +2,13 @@
 
 This simple web application allows users to create drawings that contain only three types of primitives: circles, squares, and triangles.
 
+In the left panel, the user can define primitives with the zoom level and the rotation angle. Then user can add, drag, or delete the selected primitive to visualize the drawing on the canvas's right side. On top user can check the number of each primitive currently used in the canvas, which also gives a score on the canvas, based on the balance of the primitive number.
 
 <img src="https://github.com/chrisnumber49/React-Primitive-Art/blob/main/screen%20shot/Screenshot%202024-09-19%20004807.png" width="700" >
 <img src="https://github.com/chrisnumber49/React-Primitive-Art/blob/main/screen%20shot/Screenshot%202024-09-19%20004914.png" width="700" >
 <img src="https://github.com/chrisnumber49/React-Primitive-Art/blob/main/screen%20shot/Screenshot%202024-09-19%20004934.png" width="700" >
 
-The core technology of this project revolves around using...
+The core technology of this project revolves around using **react-konva** library to implement the visualization of the primitive art.
 
 ## Available Scripts
 
